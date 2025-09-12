@@ -1,82 +1,55 @@
-# Lightweight React Template for KAVIA
+# PMIS Frontend (React)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+A mobile-first web app to help candidates discover and apply for relevant internships on the PM Internship Scheme portal. Includes onboarding, profile entry, resume upload, AI-based recommendations, internship listing, regional language support, and an AI assistant.
 
-## Features
+## Quick Start
 
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+1. Copy environment variables
+   cp .env.example .env
+   Then update:
+   - REACT_APP_API_BASE_URL to point to pmis_backend (e.g., http://localhost:8000)
 
-## Getting Started
+2. Install and run
+   npm install
+   npm start
+   Open http://localhost:3000
 
-In the project directory, you can run:
+3. Build
+   npm run build
 
-### `npm start`
+## Features Implemented
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Candidate onboarding with visual steps
+- Profile form with skills and interests
+- Resume upload (multipart) and status
+- Personalized recommendations (uses backend if available; otherwise client-side lightweight ranking)
+- Internship listing with search and location filter
+- AI chatbot (widget + page) with backend integration and local rule-based fallback
+- Regional language adaptation (EN, HI, TA, TE, BN, MR)
+- Light/Dark theme toggle
+- Responsive design for mobile
 
-### `npm test`
+## API Integration
 
-Launches the test runner in interactive watch mode.
+The app expects these endpoints in pmis_backend:
 
-### `npm run build`
+- POST /api/profile
+- GET  /api/profile
+- POST /api/resume/upload
+- GET  /api/recommendations
+- GET  /api/internships?q=&location=
+- POST /api/internships/:id/apply
+- POST /api/assistant/ask
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+All API calls are configured via REACT_APP_API_BASE_URL.
 
-## Customization
+## Notes
 
-### Colors
+- If backend endpoints are not yet available, Recommendations fall back to client-side ranking using /api/internships and your saved profile (or defaults).
+- The AI assistant uses backend first; if unavailable it uses a small rule-based set of answers.
 
-The main brand colors are defined as CSS variables in `src/App.css`:
+## Accessibility
 
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
-
-### Components
-
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Keyboard friendly forms and buttons
+- Clear labels and helper text
+- High-contrast theme available via theme toggle
