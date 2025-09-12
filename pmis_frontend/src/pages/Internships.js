@@ -27,12 +27,19 @@ export default function Internships() {
 
   useEffect(() => { search(); }, []);
 
+  const externalUrl = (it) => {
+    if (it.url && /^https?:\/\//.test(it.url)) return it.url;
+    if (it.pmisUrl && /^https?:\/\//.test(it.pmisUrl)) return it.pmisUrl;
+    if (it.id) return 'https://internship.aicte-india.org/';
+    return 'https://internship.aicte-india.org/';
+  };
+
   const onApply = async (it) => {
     try {
       await applyToInternship(it.id);
       alert('Application triggered successfully.');
     } catch {
-      window.open(it.url || '#', '_blank');
+      window.open(externalUrl(it), '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -50,8 +57,9 @@ export default function Internships() {
             <input className="input" value={loc} onChange={e => setLoc(e.target.value)} />
           </div>
         </div>
-        <div style={{marginTop: 10}}>
+        <div style={{marginTop: 10, display:'flex', gap:8}}>
           <button className="btn" onClick={search}>Search</button>
+          <a className="btn secondary" href="/recommendations">See Recommendations</a>
         </div>
       </div>
 
@@ -65,9 +73,10 @@ export default function Internships() {
               <div style={{marginBottom:8}}>
                 {(it.tags || []).slice(0,6).map(t => <span key={t} className="badge">{t}</span>)}
               </div>
-              <div style={{display:'flex', gap:8}}>
-                <a className="btn secondary" href={it.url || '#'} target="_blank" rel="noreferrer">Details</a>
+              <div style={{display:'flex', gap:8, flexWrap:'wrap'}}>
+                <a className="btn secondary" href={externalUrl(it)} target="_blank" rel="noopener noreferrer">Details</a>
                 <button className="btn" onClick={() => onApply(it)}>{t.internships.apply}</button>
+                <a className="btn success" href={externalUrl(it)} target="_blank" rel="noopener noreferrer">Apply on PMIS</a>
               </div>
             </div>
           ))}

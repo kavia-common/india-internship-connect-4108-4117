@@ -36,12 +36,19 @@ export default function Recommendations() {
 
   useEffect(() => { fetchRecs(); }, []);
 
+  const externalUrl = (rec) => {
+    if (rec.url && /^https?:\/\//.test(rec.url)) return rec.url;
+    if (rec.pmisUrl && /^https?:\/\//.test(rec.pmisUrl)) return rec.pmisUrl;
+    if (rec.id) return 'https://internship.aicte-india.org/';
+    return 'https://internship.aicte-india.org/';
+  };
+
   const onApply = async (rec) => {
     try {
       await applyToInternship(rec.id);
       alert('Application triggered successfully.');
     } catch {
-      window.open(rec.url || '#', '_blank');
+      window.open(externalUrl(rec), '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -50,9 +57,10 @@ export default function Recommendations() {
       <div className="container">
         <h2 style={{marginTop:0}}>✨ {t.recs.title}</h2>
         <div className="helper">Get 3-5 top matches tailored to your skills and interests.</div>
-        <div style={{display:'flex', gap:8, marginTop:8}}>
+        <div style={{display:'flex', gap:8, marginTop:8, flexWrap:'wrap'}}>
           <button className="btn" onClick={fetchRecs}>{t.recs.refresh}</button>
           <a className="btn secondary" href="/internships">{t.recs.viewAll}</a>
+          <a className="btn secondary" href="/assistant">Ask Assistant</a>
         </div>
         {note && <div className="helper">ℹ️ {note}</div>}
       </div>

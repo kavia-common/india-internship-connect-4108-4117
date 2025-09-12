@@ -75,9 +75,10 @@ export default function Onboarding() {
         <div className="container">
           <h3 style={{marginTop:0}}>🎉 {t.onboarding.doneTitle}</h3>
           <div className="helper">{t.onboarding.doneSubtitle}</div>
-          <div style={{display:'flex', gap:8, marginTop:12}}>
+          <div style={{display:'flex', gap:8, marginTop:12, flexWrap:'wrap'}}>
             <button className="btn success" onClick={() => nav('/recommendations')}>{t.nav.recommendations}</button>
             <button className="btn secondary" onClick={() => nav('/profile')}>{t.nav.profile}</button>
+            <button className="btn secondary" onClick={() => nav('/assistant')}>{t.nav.assistant}</button>
           </div>
         </div>
       )}
