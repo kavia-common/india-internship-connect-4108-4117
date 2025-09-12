@@ -1,19 +1,17 @@
 import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../i18n/LanguageContext';
 import { getText } from '../i18n/texts';
 import ResumeUploader from '../components/ResumeUploader';
 
 // PUBLIC_INTERFACE
-export default function Onboarding() {
-  /** Multi-step onboarding: info -> skills -> resume -> done */
+export default function Onboarding({ navigateTo }) {
+  /** Multi-step onboarding: info -> skills -> resume -> done (single-page mode) */
   const { lang } = useLanguage();
   const t = useMemo(() => getText(lang), [lang]);
   const [step, setStep] = useState(0);
-  const nav = useNavigate();
 
   const next = () => setStep(s => Math.min(s + 1, 3));
-  const skip = () => nav('/profile');
+  const skip = () => navigateTo && navigateTo('profile');
 
   return (
     <div className="grid">
@@ -76,9 +74,9 @@ export default function Onboarding() {
           <h3 style={{marginTop:0}}>🎉 {t.onboarding.doneTitle}</h3>
           <div className="helper">{t.onboarding.doneSubtitle}</div>
           <div style={{display:'flex', gap:8, marginTop:12, flexWrap:'wrap'}}>
-            <button className="btn success" onClick={() => nav('/recommendations')}>{t.nav.recommendations}</button>
-            <button className="btn secondary" onClick={() => nav('/profile')}>{t.nav.profile}</button>
-            <button className="btn secondary" onClick={() => nav('/assistant')}>{t.nav.assistant}</button>
+            <button className="btn success" onClick={() => navigateTo && navigateTo('recommendations')}>{t.nav.recommendations}</button>
+            <button className="btn secondary" onClick={() => navigateTo && navigateTo('profile')}>{t.nav.profile}</button>
+            <button className="btn secondary" onClick={() => navigateTo && navigateTo('assistant')}>{t.nav.assistant}</button>
           </div>
         </div>
       )}

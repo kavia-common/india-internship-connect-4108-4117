@@ -59,7 +59,6 @@ export default function Internships() {
         </div>
         <div style={{marginTop: 10, display:'flex', gap:8}}>
           <button className="btn" onClick={search}>Search</button>
-          <a className="btn secondary" href="/recommendations">See Recommendations</a>
         </div>
       </div>
 

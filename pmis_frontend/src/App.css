@@ -33,13 +33,13 @@ html, body, #root {
 
 * { box-sizing: border-box; }
 
-a.nav-link {
+a.nav-link, button.nav-link {
   color: var(--text-primary);
   text-decoration: none;
   padding: 6px 10px;
   border-radius: 8px;
 }
-a.nav-link:hover { background: var(--border-color); }
+a.nav-link:hover, button.nav-link:hover { background: var(--border-color); }
 
 .container {
   background: var(--bg-primary);
@@ -129,7 +129,15 @@ label { font-size: 14px; color: var(--text-secondary); display: block; margin-bo
 
 .theme-toggle:hover { opacity: 0.9; }
 
-/* Floating chatbot widget */
+/* Two-column layout helper for assistant panel */
+.assistant-panel {
+  min-width: 300px;
+}
+
+.assistant-card .chat-header { display: flex; justify-content: space-between; align-items: center; }
+.assistant-card .chat-body { padding: 10px 12px; display: grid; gap: 8px; }
+
+/* Floating chatbot widget (will be hidden by default on desktop due to docked panel) */
 .chatbot-fab {
   position: fixed;
   right: 16px;
@@ -159,7 +167,6 @@ label { font-size: 14px; color: var(--text-secondary); display: block; margin-bo
 .chat-header {
   padding: 10px 12px;
   border-bottom: 1px solid var(--border-color);
-  display: flex; justify-content: space-between; align-items: center;
 }
 .chat-body {
   padding: 10px 12px;
@@ -171,7 +178,11 @@ label { font-size: 14px; color: var(--text-secondary); display: block; margin-bo
   display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--border-color);
 }
 
-/* Mobile */
+/* Mobile: Collapse assistant panel below content; allow floating widget again if desired */
+@media (max-width: 1024px) {
+  /* When screen is narrow, stack the layout (handled inline via grid change in App.js) */
+}
+
 @media (max-width: 768px) {
   .row, .row-3 { grid-template-columns: 1fr; }
   .chat-window { right: 8px; left: 8px; width: auto; }
